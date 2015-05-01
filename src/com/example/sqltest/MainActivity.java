@@ -32,9 +32,8 @@ public class MainActivity extends ActionBarActivity {
 			doc_id = title_text.getText().toString();
 			note = note_text.getText().toString();
 
-			DatabaseHelper db = new DatabaseHelper(MainActivity.this);
-
-			db.addNote(1, doc_id, note);
+			DatabaseHelper db = new DatabaseHelper(MainActivity.this);			
+			db.addNote(db.getLastNoteId() + 1, doc_id, note);
 
 			Log.d("Database insert", "Successful");
 			Intent intent = new Intent(MainActivity.this,ViewNotesActivity.class);
