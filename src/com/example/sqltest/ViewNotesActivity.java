@@ -84,7 +84,7 @@ public class ViewNotesActivity extends ActionBarActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.add) {
-			Intent intent = new Intent(this, MainActivity.class);
+			Intent intent = new Intent(this, AddNoteActivity.class);
 			startActivity(intent);
 			return true;
 		}

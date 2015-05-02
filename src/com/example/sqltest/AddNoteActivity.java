@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.sqltest.models.Notes;
 import com.example.sqltest.models.NotesDatabaseHelper;
 
-public class MainActivity extends ActionBarActivity {
+public class AddNoteActivity extends ActionBarActivity {
 
 	EditText title_text, note_text;
 	String doc_id, note;
@@ -20,7 +20,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_add_note);
 
 		title_text = (EditText) findViewById(R.id.maTB_Title);
 		note_text = (EditText) findViewById(R.id.maTA_Note);
@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
 			newNote.setDocId(doc_id);
 			newNote.setNote(note);
 			
-			NotesDatabaseHelper db = new NotesDatabaseHelper(MainActivity.this);
+			NotesDatabaseHelper db = new NotesDatabaseHelper(AddNoteActivity.this);
 			int note_id = db.getLastNoteId(); 
 			
 			if (note_id > 0){
@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
 			Toast.makeText(this, newNote.getDocId() + " saved!", Toast.LENGTH_SHORT).show();
 			Log.d("NewNote", "NewNote: " + newNote.getId() + " " + newNote.getDocId() + " " + newNote.getNote());
 			
-			Intent intent = new Intent(MainActivity.this,ViewNotesActivity.class);
+			Intent intent = new Intent(AddNoteActivity.this,ViewNotesActivity.class);
 			startActivity(intent);
 			finish();
 			
