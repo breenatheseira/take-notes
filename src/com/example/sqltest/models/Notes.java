@@ -19,8 +19,8 @@ public class Notes {
 		this.doc_id = did;
 	}
 	
-	public void setNote(String content){
-		this.note = content;
+	public void setNote(String note){
+		this.note = note;
 	}
 	
 	public String getId(){

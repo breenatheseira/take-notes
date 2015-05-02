@@ -32,12 +32,23 @@ public class MainActivity extends ActionBarActivity {
 
 			doc_id = title_text.getText().toString();
 			note = note_text.getText().toString();
-			Notes newNote = new Notes(String.valueOf(1), doc_id, this.note);
+			Notes newNote = new Notes();
+
+			newNote.setDocId(doc_id);
+			newNote.setNote(note);
 			
-			NotesDatabaseHelper db = new NotesDatabaseHelper(MainActivity.this);			
+			NotesDatabaseHelper db = new NotesDatabaseHelper(MainActivity.this);
+			int note_id = db.getLastNoteId(); 
+			
+			if (note_id > 0){
+				newNote.setId(String.valueOf(note_id + 1));
+			} else {
+				newNote.setId(String.valueOf(1));
+			}
 			db.addNote(newNote);
 			
 			Toast.makeText(this, newNote.getDocId() + " saved!", Toast.LENGTH_SHORT).show();
+			Log.d("NewNote", "NewNote: " + newNote.getId() + " " + newNote.getDocId() + " " + newNote.getNote());
 			
 //			Intent intent = new Intent(MainActivity.this,ViewNotesActivity.class);
 //			startActivity(intent);
