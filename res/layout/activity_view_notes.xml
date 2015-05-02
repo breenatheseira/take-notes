@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <ListView
-        android:id="@+id/vna_listview"
+        android:id="@+id/vnas_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" 
-        android:id="@+id/vnaLL_emptyList">
+        android:id="@+id/vnasLL_emptyList">
 
         <TextView
-            android:id="@+id/vnaTV_doc_id"
+            android:id="@+id/vnasTV_doc_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Medium Text"

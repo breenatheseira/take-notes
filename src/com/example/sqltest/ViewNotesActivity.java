@@ -1,11 +1,7 @@
 package com.example.sqltest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -24,8 +20,8 @@ public class ViewNotesActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_notes);
 		
-		noteList = (ListView) findViewById(R.id.vna_listview);
-		emptyLayout = (LinearLayout) findViewById(R.id.vnaLL_emptyList);
+		noteList = (ListView) findViewById(R.id.vnas_listview);
+		emptyLayout = (LinearLayout) findViewById(R.id.vnasLL_emptyList);
 
 		loadListView();
 
@@ -37,12 +33,7 @@ public class ViewNotesActivity extends ActionBarActivity {
 		titles = db.getOneNoteColumn("doc_id");
 		notes = db.getOneNoteColumn("note");
 		
-		String[] me = {"hi", "what's up"};
-		Log.d("VNA", me[0].toString());
-		
-		ArrayList<String> bla = new ArrayList<String>();
-		bla.addAll(Arrays.asList(me));
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewNotesActivity.this, android.R.layout.simple_list_item_1,bla);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewNotesActivity.this, android.R.layout.simple_list_item_1,titles);
 		
 		noteList.setAdapter(adapter);
 		noteList.setEmptyView(emptyLayout);
