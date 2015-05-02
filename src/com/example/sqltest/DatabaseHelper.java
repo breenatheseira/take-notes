@@ -28,6 +28,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ TABLE_NOTES + "(" + KEY_NOTE_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_DOC_ID + " TEXT," + KEY_NOTE + " TEXT" + ")";
 
+	private SQLiteDatabase rdb = this.getReadableDatabase();
+	private SQLiteDatabase wdb = this.getWritableDatabase();
+	
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -93,6 +96,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			Log.d("Get Last ID", e.toString());
 		}
 		return id;
+	}
+	
+	public String getOneNoteRow(String key, String id){
+		String value = null;
+		String selectQuery = "Select " + key + " FROM " + TABLE_NOTES + " WHERE id = " + id;
+		Cursor c = rdb.rawQuery(selectQuery, null);
+		
+		if (c.moveToNext()){
+			value = c.getString(0);
+		}
+		return value;
 	}
 
 	// public int updateToDo(Todo todo) {
