@@ -34,21 +34,6 @@ public class ViewNotesActivity extends ActionBarActivity {
 		emptyLayout = (LinearLayout) findViewById(R.id.vnasLL_emptyList);
 
 		loadListView();
-		noteList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long l) {
-				
-				// victor (2010) Android - Getting Database ID from ListView Selection. [Online]. Available from: http://stackoverflow.com/questions/12268721/android-getting-database-id-from-listview-selection [Accessed: 2 May 2015].
-				String id = notes.get(position).getId(); 
-				
-				Intent intent = new Intent(ViewNotesActivity.this, ViewNoteActivity.class);
-				intent.putExtra("id", id);
-				startActivity(intent);
-			}
-		});
-			
 	}
 
 	private void loadListView() {
@@ -67,6 +52,22 @@ public class ViewNotesActivity extends ActionBarActivity {
 		
 		noteList.setAdapter(adapter);
 		noteList.setEmptyView(emptyLayout);
+		
+		noteList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long l) {
+				
+				// victor (2010) Android - Getting Database ID from ListView Selection. [Online]. Available from: http://stackoverflow.com/questions/12268721/android-getting-database-id-from-listview-selection [Accessed: 2 May 2015].
+				String id = notes.get(position).getId(); 
+				
+				Intent intent = new Intent(ViewNotesActivity.this, ViewNoteActivity.class);
+				intent.putExtra("id", id);
+				startActivity(intent);
+			}
+		});
+		
 	}
 
 	@Override
@@ -89,4 +90,12 @@ public class ViewNotesActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	protected void onPostResume() {
+		loadListView();
+		super.onPostResume();
+	}
+	
+	
 }
