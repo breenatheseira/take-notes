@@ -27,7 +27,7 @@ public class NotesDatabaseHelper extends DatabaseHelper {
 	public NotesDatabaseHelper(Context context) {
 		super(context);
 	}
-	
+
 	public void addNote(Notes note) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -58,21 +58,24 @@ public class NotesDatabaseHelper extends DatabaseHelper {
 		}
 		return id;
 	}
-	
-	//Tamada, R. (2013) Android SQLite Database with Multiple Tables. [Online]. Available from: http://www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/ [Accessed: 1 May 2015].
-	public List<Notes> getAllNotes(){
+
+	// Tamada, R. (2013) Android SQLite Database with Multiple Tables. [Online].
+	// Available from:
+	// http://www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/
+	// [Accessed: 1 May 2015].
+	public List<Notes> getAllNotes() {
 		List<Notes> notes = new ArrayList<Notes>();
 		String sql = "SELECT * FROM " + TABLE_NOTES;
-		
+
 		Cursor c = rdb.rawQuery(sql, null);
-		
+
 		if (c.moveToFirst()) {
 			do {
 				Notes note = new Notes();
 				note.setId(c.getString(c.getColumnIndex(KEY_NOTE_ID)));
 				note.setDocId(c.getString(c.getColumnIndex(KEY_DOC_ID)));
 				note.setNote(c.getString(c.getColumnIndex(KEY_NOTE)));
-				
+
 				notes.add(note);
 			} while (c.moveToNext());
 		}
@@ -81,8 +84,8 @@ public class NotesDatabaseHelper extends DatabaseHelper {
 
 	public String getOneNoteRow(String key, String id) {
 		String value = null;
-		String sql = "Select " + key + " FROM " + TABLE_NOTES
-				+ " WHERE id = " + id;
+		String sql = "Select " + key + " FROM " + TABLE_NOTES + " WHERE id = "
+				+ id;
 		Cursor c = rdb.rawQuery(sql, null);
 
 		if (c.moveToNext()) {
@@ -91,17 +94,16 @@ public class NotesDatabaseHelper extends DatabaseHelper {
 		return value;
 	}
 
-	// public int updateToDo(Todo todo) {
-	// SQLiteDatabase db = this.getWritableDatabase();
-	//
-	// ContentValues values = new ContentValues();
-	// values.put(KEY_TODO, todo.getNote());
-	// values.put(KEY_STATUS, todo.getStatus());
-	//
-	// // updating row
-	// return db.update(TABLE_TODO, values, KEY_ID + " = ?",
-	// new String[] { String.valueOf(todo.getId()) });
-	// }
+	public int updateNote(Notes note) {		
+		ContentValues values = new ContentValues();
+		values.put(KEY_DOC_ID, note.getDocId());
+		values.put(KEY_NOTE, note.getNote());
+
+		// updating row
+		int i = wdb.update(TABLE_NOTES, values, KEY_NOTE_ID + " = ?",new String[] { String.valueOf(note.getId()) });
+		Log.d("update values", i + " > doc id: " + note.getDocId() + ", note: " + note.getNote());
+		return i;
+	}
 	//
 	// public void deleteToDo(long tado_id) {
 	// SQLiteDatabase db = this.getWritableDatabase();
