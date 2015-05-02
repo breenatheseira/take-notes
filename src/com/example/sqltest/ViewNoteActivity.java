@@ -1,5 +1,7 @@
 package com.example.sqltest;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -71,14 +73,25 @@ public class ViewNoteActivity extends ActionBarActivity {
 			}
 			break;
 		case R.id.discard:
-			if (db.deleteNote(noteViewed.getId()) == 1) {
-				Toast.makeText(this, oldTitle + " deleted", Toast.LENGTH_SHORT).show();
-				finish();
-			} else {
-				Toast.makeText(this,"Error: " + noteViewed.getDocId()+ " could not be deleted", Toast.LENGTH_SHORT).show();
-			}
+			deleteNote();
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void deleteNote(){
+	  new AlertDialog.Builder(this)
+      .setMessage("Are you sure you want to delete this not?")
+      .setCancelable(false)
+      .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int id) {
+
+        	//Delete the note
+        	if (db.deleteNote(noteViewed.getId()) == 1)
+				finish();        	  
+          }
+      })
+      .setNegativeButton("No", null)
+      .show();
 	}
 }
