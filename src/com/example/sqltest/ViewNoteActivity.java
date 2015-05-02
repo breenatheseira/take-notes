@@ -12,19 +12,21 @@ public class ViewNoteActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_view_note);
 		
 		docId = (EditText) findViewById(R.id.vna_title);
 		note = (EditText) findViewById(R.id.vna_note);
 		setNotesContents();
-		
+
 		docId.setText(title);
 		note.setText(noteContent);
 	}
 	
 	private void setNotesContents(){
 		DatabaseHelper db = new DatabaseHelper(ViewNoteActivity.this);
-		title = db.getOneNoteRow("doc_id", getIntent().getExtras().toString());
-		noteContent  = db.getOneNoteRow("note", getIntent().getExtras().toString());
+		String id = String.valueOf((getIntent().getIntExtra("id", 0)));
+		title = db.getOneNoteRow("doc_id", id);
+		noteContent  = db.getOneNoteRow("note", id);
 	}
 }

@@ -1,9 +1,13 @@
 package com.example.sqltest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,7 +28,17 @@ public class ViewNotesActivity extends ActionBarActivity {
 		emptyLayout = (LinearLayout) findViewById(R.id.vnasLL_emptyList);
 
 		loadListView();
+		noteList.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(ViewNotesActivity.this, ViewNoteActivity.class);
+				intent.putExtra("id", (int)id);
+				startActivity(intent);
+			}
+		});
+			
 	}
 
 	private void loadListView() {
