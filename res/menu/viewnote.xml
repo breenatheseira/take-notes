@@ -6,7 +6,11 @@
 	    android:id="@+id/save"
 	    android:icon="@drawable/ic_action_save"
 	    android:title="Save"
-	    app:showAsAction="always" 
-	    android:orderInCategory="1"/>
+	    app:showAsAction="always" />
+		<item
+	    android:id="@+id/discard"
+	    android:icon="@drawable/ic_action_discard"
+	    android:title="Discard"
+	    app:showAsAction="always" />
 </menu>
 

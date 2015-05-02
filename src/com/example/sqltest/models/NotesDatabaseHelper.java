@@ -94,22 +94,22 @@ public class NotesDatabaseHelper extends DatabaseHelper {
 		return value;
 	}
 
-	public int updateNote(Notes note) {		
+	public int updateNote(Notes note) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_DOC_ID, note.getDocId());
 		values.put(KEY_NOTE, note.getNote());
 
 		// updating row
-		int i = wdb.update(TABLE_NOTES, values, KEY_NOTE_ID + " = ?",new String[] { String.valueOf(note.getId()) });
-		Log.d("update values", i + " > doc id: " + note.getDocId() + ", note: " + note.getNote());
+		int i = wdb.update(TABLE_NOTES, values, KEY_NOTE_ID + " = ?",
+				new String[] { String.valueOf(note.getId()) });
+		Log.d("update values", i + " > doc id: " + note.getDocId() + ", note: "
+				+ note.getNote());
 		return i;
 	}
-	//
-	// public void deleteToDo(long tado_id) {
-	// SQLiteDatabase db = this.getWritableDatabase();
-	// db.delete(TABLE_TODO, KEY_ID + " = ?",
-	// new String[] { String.valueOf(tado_id) });
-	// }
+
+	public int deleteNote(String id) {
+		return wdb.delete(TABLE_NOTES, KEY_NOTE_ID + " = ?",new String[] { String.valueOf(id) });
+	}
 	//
 	// public int getToDoCount() {
 	// String countQuery = "SELECT  * FROM " + TABLE_TODO;
