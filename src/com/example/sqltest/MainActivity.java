@@ -6,13 +6,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.sqltest.models.Notes;
+import com.example.sqltest.models.NotesDatabaseHelper;
 
 public class MainActivity extends ActionBarActivity {
 
-	Button save_button;
 	EditText title_text, note_text;
 	String doc_id, note;
 
@@ -21,24 +22,26 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		save_button = (Button) findViewById(R.id.maB_Save);
 		title_text = (EditText) findViewById(R.id.maTB_Title);
 		note_text = (EditText) findViewById(R.id.maTA_Note);
 
 	}
 
-	public void save(View button) {
+	private void save() {
 		try {
+
 			doc_id = title_text.getText().toString();
 			note = note_text.getText().toString();
-
-			DatabaseHelper db = new DatabaseHelper(MainActivity.this);			
-			db.addNote(db.getLastNoteId() + 1, doc_id, note);
-
-			Log.d("Database insert", "Successful");
-			Intent intent = new Intent(MainActivity.this,ViewNotesActivity.class);
-			startActivity(intent);
-			finish();
+			Notes newNote = new Notes(String.valueOf(1), doc_id, this.note);
+			
+			NotesDatabaseHelper db = new NotesDatabaseHelper(MainActivity.this);			
+			db.addNote(newNote);
+			
+			Toast.makeText(this, newNote.getDocId() + " saved!", Toast.LENGTH_SHORT).show();
+			
+//			Intent intent = new Intent(MainActivity.this,ViewNotesActivity.class);
+//			startActivity(intent);
+//			finish();
 			
 		} catch (Exception e) {
 			Log.d("Database insert", e.toString());
@@ -60,6 +63,7 @@ public class MainActivity extends ActionBarActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.save) {
+			save();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
