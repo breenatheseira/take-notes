@@ -21,8 +21,8 @@ import com.example.sqltest.models.NotesDatabaseHelper;
 public class ViewNotesActivity extends ActionBarActivity {
 
 	ListView noteList;
-	String[] note_ids = {}, titles = {}, notes = {};
 	LinearLayout emptyLayout;
+	List<Notes> notes;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +38,14 @@ public class ViewNotesActivity extends ActionBarActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-//				Intent intent = new Intent(ViewNotesActivity.this, ViewNoteActivity.class);
-//				intent.putExtra("id", (int)id);
-//				startActivity(intent);
+					int position, long l) {
+				
+				// victor (2010) Android - Getting Database ID from ListView Selection. [Online]. Available from: http://stackoverflow.com/questions/12268721/android-getting-database-id-from-listview-selection [Accessed: 2 May 2015].
+				String id = notes.get(position).getId(); 
+				
+				Intent intent = new Intent(ViewNotesActivity.this, ViewNoteActivity.class);
+				intent.putExtra("id", id);
+				startActivity(intent);
 			}
 		});
 			
@@ -53,7 +57,7 @@ public class ViewNotesActivity extends ActionBarActivity {
 		ArrayList<String> titles = new ArrayList<String>(); 
 		
 		//Tamada, R. (2013) Android SQLite Database with Multiple Tables. [Online]. Available from: http://www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/ [Accessed: 1 May 2015].
-		List<Notes> notes = db.getAllNotes();
+		notes = db.getAllNotes();
 		for (Notes eachNote : notes){
 			titles.add(eachNote.getDocId());
 		}
