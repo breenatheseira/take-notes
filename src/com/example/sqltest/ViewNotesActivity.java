@@ -47,6 +47,7 @@ public class ViewNotesActivity extends ActionBarActivity {
 		titles = db.getOneNoteColumn("doc_id");
 		notes = db.getOneNoteColumn("note");
 		
+		// Developers (n.d.) Layouts. [Online]. Available from: http://developer.android.com/guide/topics/ui/declaring-layout.html#AdapterViews [Accessed: 1 May 2015]. 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewNotesActivity.this, android.R.layout.simple_list_item_1,titles);
 		
 		noteList.setAdapter(adapter);

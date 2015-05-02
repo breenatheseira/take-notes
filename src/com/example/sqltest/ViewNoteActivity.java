@@ -25,6 +25,9 @@ public class ViewNoteActivity extends ActionBarActivity {
 	
 	private void setNotesContents(){
 		DatabaseHelper db = new DatabaseHelper(ViewNoteActivity.this);
+		
+		// Rafael T. (2011) Load data to android list view with record id and pass the exact record id onListItemClick. [Online]. Available from: http://stackoverflow.com/questions/7406123/load-data-to-android-list-view-with-record-id-and-pass-the-exact-record-id-onlis [Accessed: 2 May 2015].
+
 		String id = String.valueOf((getIntent().getIntExtra("id", 0)));
 		title = db.getOneNoteRow("doc_id", id);
 		noteContent  = db.getOneNoteRow("note", id);
