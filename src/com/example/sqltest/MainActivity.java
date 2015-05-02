@@ -50,9 +50,9 @@ public class MainActivity extends ActionBarActivity {
 			Toast.makeText(this, newNote.getDocId() + " saved!", Toast.LENGTH_SHORT).show();
 			Log.d("NewNote", "NewNote: " + newNote.getId() + " " + newNote.getDocId() + " " + newNote.getNote());
 			
-//			Intent intent = new Intent(MainActivity.this,ViewNotesActivity.class);
-//			startActivity(intent);
-//			finish();
+			Intent intent = new Intent(MainActivity.this,ViewNotesActivity.class);
+			startActivity(intent);
+			finish();
 			
 		} catch (Exception e) {
 			Log.d("Database insert", e.toString());

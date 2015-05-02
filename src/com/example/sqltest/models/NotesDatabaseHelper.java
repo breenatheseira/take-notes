@@ -1,10 +1,12 @@
 package com.example.sqltest.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract.CommonDataKinds.Note;
 import android.util.Log;
 
 import com.example.sqltest.DatabaseHelper;
@@ -39,28 +41,12 @@ public class NotesDatabaseHelper extends DatabaseHelper {
 		db.close();
 	}
 
-	public String[] getOneNoteColumn(String key) {
-		String selectQuery = "SELECT " + key + " FROM " + TABLE_NOTES;
-		SQLiteDatabase db = this.getReadableDatabase();
-
-		Cursor c = db.rawQuery(selectQuery, null);
-
-		String[] arr = new String[c.getCount()];
-		int i = 0;
-		while (c.moveToNext()) {
-			arr[i] = c.getString(0);
-			i++;
-		}
-		db.close();
-		return arr;
-	}
-
 	public int getLastNoteId() {
-		String selectQuery = "SELECT " + KEY_NOTE_ID + " FROM " + TABLE_NOTES;
+		String sql = "SELECT " + KEY_NOTE_ID + " FROM " + TABLE_NOTES;
 		int id = -1;
 		try {
 			SQLiteDatabase db = this.getReadableDatabase();
-			Cursor c = db.rawQuery(selectQuery, null);
+			Cursor c = db.rawQuery(sql, null);
 
 			if (c.moveToLast()) {
 				id = Integer.parseInt(c.getString(0));
@@ -72,12 +58,32 @@ public class NotesDatabaseHelper extends DatabaseHelper {
 		}
 		return id;
 	}
+	
+	//Tamada, R. (2013) Android SQLite Database with Multiple Tables. [Online]. Available from: http://www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/ [Accessed: 1 May 2015].
+	public List<Notes> getAllNotes(){
+		List<Notes> notes = new ArrayList<Notes>();
+		String sql = "SELECT * FROM " + TABLE_NOTES;
+		
+		Cursor c = rdb.rawQuery(sql, null);
+		
+		if (c.moveToFirst()) {
+			do {
+				Notes note = new Notes();
+				note.setId(c.getString(c.getColumnIndex(KEY_NOTE_ID)));
+				note.setDocId(c.getString(c.getColumnIndex(KEY_DOC_ID)));
+				note.setNote(c.getString(c.getColumnIndex(KEY_NOTE)));
+				
+				notes.add(note);
+			} while (c.moveToNext());
+		}
+		return notes;
+	}
 
 	public String getOneNoteRow(String key, String id) {
 		String value = null;
-		String selectQuery = "Select " + key + " FROM " + TABLE_NOTES
+		String sql = "Select " + key + " FROM " + TABLE_NOTES
 				+ " WHERE id = " + id;
-		Cursor c = rdb.rawQuery(selectQuery, null);
+		Cursor c = rdb.rawQuery(sql, null);
 
 		if (c.moveToNext()) {
 			value = c.getString(0);

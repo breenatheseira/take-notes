@@ -1,5 +1,8 @@
 package com.example.sqltest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +14,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.example.sqltest.models.Notes;
+import com.example.sqltest.models.NotesDatabaseHelper;
 
 public class ViewNotesActivity extends ActionBarActivity {
 
@@ -33,19 +39,24 @@ public class ViewNotesActivity extends ActionBarActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent = new Intent(ViewNotesActivity.this, ViewNoteActivity.class);
-				intent.putExtra("id", (int)id);
-				startActivity(intent);
+//				Intent intent = new Intent(ViewNotesActivity.this, ViewNoteActivity.class);
+//				intent.putExtra("id", (int)id);
+//				startActivity(intent);
 			}
 		});
 			
 	}
 
 	private void loadListView() {
-		DatabaseHelper db = new DatabaseHelper(ViewNotesActivity.this);
-		note_ids = db.getOneNoteColumn("id");
-		titles = db.getOneNoteColumn("doc_id");
-		notes = db.getOneNoteColumn("note");
+		NotesDatabaseHelper db = new NotesDatabaseHelper(ViewNotesActivity.this);
+		
+		ArrayList<String> titles = new ArrayList<String>(); 
+		
+		//Tamada, R. (2013) Android SQLite Database with Multiple Tables. [Online]. Available from: http://www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/ [Accessed: 1 May 2015].
+		List<Notes> notes = db.getAllNotes();
+		for (Notes eachNote : notes){
+			titles.add(eachNote.getDocId());
+		}
 		
 		// Developers (n.d.) Layouts. [Online]. Available from: http://developer.android.com/guide/topics/ui/declaring-layout.html#AdapterViews [Accessed: 1 May 2015]. 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewNotesActivity.this, android.R.layout.simple_list_item_1,titles);
